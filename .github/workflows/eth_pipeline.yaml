@@ -41,7 +41,7 @@ jobs:
       with:
         node-version: 16
         sarif: results.sarif
-        fail-on: high
+        fail-on: medium
         target: "contracts/"
     - name: Upload SARIF file
       # this will run only if previous step failed (expected behavior) and there is a sarif file
