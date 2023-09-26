@@ -37,6 +37,7 @@ jobs:
     - name: Run Slither
       uses: crytic/slither-action@v0.3.0
       id: slither
+      continue-on-error: true
       with:
         node-version: 16
         sarif: results.sarif
@@ -44,7 +45,7 @@ jobs:
         target: "contracts/"
     - name: Upload SARIF file
       # this will run only if previous step failed (expected behavior) and there is a sarif file
-      continue-on-error: true
+      if: steps.slither.outcome == 'failure' && ${{ steps.slither.outputs.sarif }}
       uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: ${{ steps.slither.outputs.sarif }}
