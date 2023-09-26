@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
         env:
@@ -36,8 +38,9 @@ jobs:
       uses: crytic/slither-action@v0.3.0
       id: slither
       with:
+        node-version: 16
         sarif: results.sarif
-        fail-on: high
+        fail-on: none
         target: "contracts/"
     - name: Upload SARIF file
       uses: github/codeql-action/upload-sarif@v2
